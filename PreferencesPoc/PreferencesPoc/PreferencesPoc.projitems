@@ -16,6 +16,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)CustomerOverview.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DevicePreferences.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IJsonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ISharedPreferencesProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

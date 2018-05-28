@@ -5,34 +5,39 @@ namespace PreferencesPoc
 {
     public partial class MainPage : ContentPage
     {
-        private ISharedPreferencesProvider preferences;
-        const string nameSpace = "whatever.namespace.you.want";
-        const string key = "SharedTokenData";
+        private DevicePreferences preferences;
 
         public MainPage()
         {
             InitializeComponent();
 
-            preferences = DependencyService.Get<ISharedPreferencesProvider>();
+            preferences = new DevicePreferences(DependencyService.Get<ISharedPreferencesProvider>(),
+                DependencyService.Get<IJsonConverter<CustomerOverview>>());
         }
 
-        private void Get(string nameSpace, string key)
+        private void Get(long customerId)
         {
-            var sharedInfo = preferences.Get(nameSpace, key, "0");
+            var sharedInfo = preferences.Get(customerId);
             labelGet.Text = $"Shared Info: {sharedInfo}";
         }
 
         public void OnGet(object sender, EventArgs e)
         {
-            var composedKey = $"{key}.{entryGet.Text}";
-            Get(nameSpace, composedKey);
+            Get(Convert.ToInt64(entryGet.Text));
         }
 
         public void OnSet(object sender, EventArgs e)
         {
-            var composedKey = $"{key}.{entrySet.Text}";
-            preferences.Set(nameSpace, composedKey, "654321");
-            Get(nameSpace, composedKey);
+            var accountNumber = Convert.ToInt64(entrySet.Text);
+
+            var account = new CustomerOverview
+            {
+                Account = accountNumber,
+                DeviceId = 10000
+            };
+
+            preferences.Set(account);
+            Get(accountNumber);
         }
     }
 }
